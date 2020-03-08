@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MoviesTest</string>
+    <string name="show_only_2020_year">Show only 2020 year</string>
+</resources>

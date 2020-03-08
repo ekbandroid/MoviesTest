@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoviesTest</string>
+    <string name="show_only_2020_year">Показать только за 2020 год.</string>
+</resources>
