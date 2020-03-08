@@ -1,9 +1,9 @@
 package androidekb.com.moviestest.movies
 
-import androidekb.com.data.repositories.Movies.MoviesRemoteGateway
-import androidekb.com.data.repositories.Movies.MoviesRemoteGatewayImpl
-import androidekb.com.data.repositories.Movies.MoviesRepository
-import androidekb.com.data.repositories.Movies.api.MoviesService
+import androidekb.com.data.repositories.movies.MoviesRemoteGateway
+import androidekb.com.data.repositories.movies.MoviesRemoteGatewayImpl
+import androidekb.com.data.repositories.movies.MoviesRepository
+import androidekb.com.data.repositories.movies.api.MoviesService
 import androidekb.com.domain.movies.GetMoviesUseCase
 import androidekb.com.moviestest.di.InjectionModule
 import org.koin.androidx.viewmodel.dsl.viewModel

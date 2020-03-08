@@ -1,6 +1,6 @@
-package androidekb.com.data.repositories.Movies.api
+package androidekb.com.data.repositories.movies.api
 
-import androidekb.com.data.repositories.Movies.api.model.MovieResponse
+import androidekb.com.data.repositories.movies.api.model.MovieResponse
 import retrofit2.http.GET
 
 interface MoviesService {

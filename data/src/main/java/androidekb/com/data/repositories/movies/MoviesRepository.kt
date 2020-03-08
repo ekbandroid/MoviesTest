@@ -1,7 +1,6 @@
-package androidekb.com.data.repositories.Movies
+package androidekb.com.data.repositories.movies
 
 import androidekb.com.data.entities.Movie
-import androidekb.com.data.repositories.Movies.api.model.MovieResponse
 
 class MoviesRepository (
    // private val moviesLocalGateway: MoviesLocalGateway,

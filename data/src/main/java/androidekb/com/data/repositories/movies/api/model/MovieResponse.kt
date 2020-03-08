@@ -1,4 +1,4 @@
-package androidekb.com.data.repositories.Movies.api.model
+package androidekb.com.data.repositories.movies.api.model
 
 import com.google.gson.annotations.SerializedName
 
