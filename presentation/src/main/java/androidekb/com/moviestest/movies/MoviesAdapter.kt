@@ -4,9 +4,9 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidekb.com.data.entities.Movie
 import androidekb.com.moviestest.GlideApp
 import androidekb.com.moviestest.R
-import androidekb.com.moviestest.ui.main.movies.model.Movie
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.movie_item.view.*

@@ -5,6 +5,8 @@ import org.koin.core.module.Module
 
 object KoinModules {
     fun create() = listOf(
+        AppModule.create(),
+        NetworkModule.create(),
         MoviesListModule.create()
     )
 }
