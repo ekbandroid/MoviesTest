@@ -1,6 +1,5 @@
 package androidekb.com.moviestest.movies
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -41,8 +40,7 @@ class MovieRepositoryViewHolder(parent: ViewGroup) :
 
     fun bind(item: Movie) {
         GlideApp.with(itemView.movieImageView.context)
-            .load(item.imageLink)
-           // .load(Uri.parse(item.imageLink))
+            .load(item.imageUrl)
             .into(itemView.movieImageView)
     }
 }

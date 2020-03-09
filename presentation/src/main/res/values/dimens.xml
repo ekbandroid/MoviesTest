@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="movies_columns_count" format="integer">3</integer>
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="padding_12dp">12dp</dimen>
+    <dimen name="font_size_16">16sp</dimen>
+</resources>
