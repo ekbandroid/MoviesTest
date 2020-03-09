@@ -14,10 +14,6 @@ class MoviesRemoteGatewayImpl(private val moviesService: MoviesService) : Movies
         moviesService
             .getMovies()
             .map {
-                Movie(
-                    id = it.id,
-                    imageLink = it.poster?:"",
-                    year = it.year?:0
-                )
+                MovieConverter.fromRemote(it)
             }
 }

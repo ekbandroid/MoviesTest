@@ -3,17 +3,15 @@ package androidekb.com.data.repositories.movies
 import androidekb.com.data.entities.Movie
 
 class MoviesRepository (
-   // private val moviesLocalGateway: MoviesLocalGateway,
+    private val moviesLocalGateway: MoviesLocalGateway,
     private val moviesRemoteGateway: MoviesRemoteGateway
 ) {
-    suspend fun getMovies(): List<Movie> =
-        moviesRemoteGateway.getMovies()
+    suspend fun loadMovies() {
+        val movies = moviesRemoteGateway.getMovies()
+        moviesLocalGateway.clear()
+        moviesLocalGateway.saveMovies(movies)
+    }
 
-//    suspend fun getCachedMovies(year: Int?): List<Movie> =
-//        moviesLocalGateway.getMovies(year)
-//
-//    suspend fun saveCachedMovies(movies:List<Movie>) {
-//        moviesLocalGateway.clear()
-//        moviesLocalGateway.saveMovies(movies)
-//    }
+    suspend fun getMoviesFromDb(year: Int?): List<Movie> =
+        moviesLocalGateway.getMovies(year)
 }

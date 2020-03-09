@@ -1,7 +1,8 @@
 package androidekb.com.moviestest.di
 
-import androidekb.com.domain.AppCoroutineDispatchers
-import androidekb.com.domain.DefaultAppCoroutineDispatchers
+import androidekb.com.common.di.InjectionModule
+import androidekb.com.common.coroutines.AppCoroutineDispatchers
+import androidekb.com.common.coroutines.DefaultAppCoroutineDispatchers
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
