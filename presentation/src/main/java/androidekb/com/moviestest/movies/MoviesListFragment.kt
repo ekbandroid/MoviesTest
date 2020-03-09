@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.movies_list_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.core.view.isVisible
 
 class MoviesListFragment : Fragment() {
 
@@ -39,21 +40,37 @@ class MoviesListFragment : Fragment() {
         moviesFilterSwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setFilter(isChecked)
         }
-
-        viewModel.moviesList.observe(
-            this,
-            Observer { moviesList ->
-                with(moviesAdapter) {
-                    submitList(moviesList)
-                    notifyDataSetChanged()
-                }
-                with(moviesRecyclerView) {
-                    moviesRecyclerView.post {
-                        scrollToPosition(0)
+        retryButton.setOnClickListener {
+            viewModel.load()
+        }
+        with(viewModel) {
+            moviesList.observe(
+                this@MoviesListFragment,
+                Observer { moviesList ->
+                    with(moviesAdapter) {
+                        submitList(moviesList)
+                        notifyDataSetChanged()
+                    }
+                    with(moviesRecyclerView) {
+                        moviesRecyclerView.post {
+                            scrollToPosition(0)
+                        }
                     }
                 }
-            }
-        )
+            )
+            showProgress.observe(
+                this@MoviesListFragment,
+                Observer { isShow ->
+                    progressBarLayout.isVisible = isShow
+                }
+            )
+            showError.observe(
+                this@MoviesListFragment,
+                Observer { isShow ->
+                    errorLayout.isVisible = isShow
+                }
+            )
+        }
     }
 }
 

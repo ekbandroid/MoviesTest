@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MoviesListViewModel(
     private val loadMoviesUseCase: LoadMoviesUseCase,
@@ -21,27 +22,62 @@ class MoviesListViewModel(
     private val _moviesList = MutableLiveData<List<Movie>>()
     val moviesList: LiveData<List<Movie>>
         get() = _moviesList
+
+    private val _showProgress = MutableLiveData<Boolean>()
+    val showProgress: LiveData<Boolean>
+        get() = _showProgress
+
+    private val _showError = MutableLiveData<Boolean>()
+    val showError: LiveData<Boolean>
+        get() = _showError
     private var yearFilter: Int? = null
 
     init {
+        load()
+    }
+
+    fun load() {
+        showProgress()
         viewModelScope.launch {
             try {
                 loadMoviesUseCase.invoke(Unit)
-                _moviesList.value = getSavedMoviesByYearUseCase.invoke(yearFilter)
             } catch (e: Exception) {
-
+                Timber.e(e, "Error load movies from server. Trying to get them from the DB")
             }
+            showSavedMovies()
         }
     }
 
     fun setFilter(checked: Boolean) {
+        showProgress()
         yearFilter = if (checked) FILTER_2020_YEAR else null
+        showSavedMovies()
+    }
+
+    private fun showSavedMovies() {
+        var movies = emptyList<Movie>()
         viewModelScope.launch {
             try {
-                _moviesList.value = getSavedMoviesByYearUseCase.invoke(yearFilter)
+                movies = getSavedMoviesByYearUseCase.invoke(yearFilter)
             } catch (e: Exception) {
-
+                Timber.e(e, "Error get movies from DB")
+            }
+            if (movies.isEmpty()) {
+                showError()
+            } else {
+                _showProgress.postValue(false)
+                _moviesList.value = movies
             }
         }
+    }
+
+    private fun showError() {
+        _showProgress.postValue(false)
+        _showError.postValue(true)
+    }
+
+    private fun showProgress() {
+        _showProgress.postValue(true)
+        _showError.postValue(false)
     }
 }
