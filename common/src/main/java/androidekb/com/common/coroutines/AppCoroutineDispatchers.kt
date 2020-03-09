@@ -1,4 +1,4 @@
-package androidekb.com.domain
+package androidekb.com.common.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
