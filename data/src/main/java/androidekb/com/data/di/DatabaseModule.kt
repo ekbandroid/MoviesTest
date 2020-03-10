@@ -1,4 +1,4 @@
-package androidekb.com.data.db
+package androidekb.com.data.di
 
 import androidekb.com.common.di.InjectionModule
 import androidekb.com.data.repositories.movies.db.MoviesDatabase

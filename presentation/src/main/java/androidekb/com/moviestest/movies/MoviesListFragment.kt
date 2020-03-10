@@ -62,6 +62,7 @@ class MoviesListFragment : Fragment() {
                         LoadingState.IN_PROGRESS -> loadingStateView.showLoadingState()
                         LoadingState.LOADED -> loadingStateView.showLoadedState()
                         LoadingState.ERROR -> loadingStateView.showErrorState()
+                        else -> {}
                     }
                 }
             )

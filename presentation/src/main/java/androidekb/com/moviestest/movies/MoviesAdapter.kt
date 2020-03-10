@@ -36,11 +36,11 @@ class MovieRepositoryViewHolder(parent: ViewGroup) :
             .from(parent.context)
             .inflate(R.layout.movie_item, parent, false)
     ) {
-    private val favoriteImageView: ImageView = itemView.movieImageView
+    private val movieImageView: ImageView = itemView.movieImageView
 
     fun bind(item: Movie) {
-        GlideApp.with(itemView.movieImageView.context)
+        GlideApp.with(movieImageView.context)
             .load(item.imageUrl)
-            .into(itemView.movieImageView)
+            .into(movieImageView)
     }
 }

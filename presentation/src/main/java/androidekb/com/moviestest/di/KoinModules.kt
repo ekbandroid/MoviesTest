@@ -1,6 +1,6 @@
 package androidekb.com.moviestest.di
 
-import androidekb.com.data.db.DatabaseModule
+import androidekb.com.data.di.DatabaseModule
 import androidekb.com.data.di.NetworkModule
 import androidekb.com.data.repositories.movies.MoviesListRepositoryModule
 import androidekb.com.moviestest.movies.MoviesListModule
