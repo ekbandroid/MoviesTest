@@ -34,7 +34,7 @@ class MoviesListViewModel(
     }
 
     fun load() {
-        _loadingState.postValue(LoadingState.IN_PROGRESS)
+        _loadingState.postValue(LoadingState.InProgress)
         viewModelScope.launch {
             try {
                 loadMoviesUseCase.invoke(Unit)
@@ -46,7 +46,7 @@ class MoviesListViewModel(
     }
 
     fun setFilter(checked: Boolean) {
-        _loadingState.postValue(LoadingState.IN_PROGRESS)
+        _loadingState.postValue(LoadingState.InProgress)
         yearFilter = if (checked) FILTER_2020_YEAR else null
         showSavedMovies()
     }
@@ -60,13 +60,17 @@ class MoviesListViewModel(
                 Timber.e(e, "Error get movies from DB")
             }
             if (movies.isEmpty()) {
-                _loadingState.postValue(LoadingState.ERROR)
+                _loadingState.postValue(LoadingState.Error)
             } else {
-                _loadingState.postValue(LoadingState.LOADED)
+                _loadingState.postValue(LoadingState.Loaded)
                 _moviesList.value = movies
             }
         }
     }
 }
 
-enum class LoadingState { IN_PROGRESS, LOADED, ERROR }
+sealed class LoadingState {
+    object InProgress : LoadingState()
+    object Loaded : LoadingState()
+    object Error : LoadingState()
+}

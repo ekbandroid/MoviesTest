@@ -17,7 +17,6 @@ class MoviesListFragment : Fragment() {
     }
 
     private val viewModel: MoviesListViewModel by viewModel()
-    private val moviesAdapter = MoviesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +27,7 @@ class MoviesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val moviesAdapter = MoviesAdapter()
         with(moviesRecyclerView) {
             adapter = moviesAdapter
             addItemDecoration(
@@ -59,10 +59,9 @@ class MoviesListFragment : Fragment() {
                 viewLifecycleOwner,
                 Observer { state ->
                     when (state) {
-                        LoadingState.IN_PROGRESS -> loadingStateView.showLoadingState()
-                        LoadingState.LOADED -> loadingStateView.showLoadedState()
-                        LoadingState.ERROR -> loadingStateView.showErrorState()
-                        else -> {}
+                        is LoadingState.InProgress -> loadingStateView.showLoadingState()
+                        is LoadingState.Loaded -> loadingStateView.showLoadedState()
+                        is LoadingState.Error -> loadingStateView.showErrorState()
                     }
                 }
             )

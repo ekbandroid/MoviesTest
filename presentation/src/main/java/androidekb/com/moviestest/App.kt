@@ -1,7 +1,6 @@
-package com.testgithub
+package androidekb.com.moviestest
 
 import android.app.Application
-import androidekb.com.moviestest.BuildConfig
 import androidekb.com.moviestest.di.KoinModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
