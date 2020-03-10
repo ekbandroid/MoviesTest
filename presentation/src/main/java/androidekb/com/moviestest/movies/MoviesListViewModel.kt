@@ -23,13 +23,10 @@ class MoviesListViewModel(
     val moviesList: LiveData<List<Movie>>
         get() = _moviesList
 
-    private val _showProgress = MutableLiveData<Boolean>()
-    val showProgress: LiveData<Boolean>
-        get() = _showProgress
+    private val _loadingState = MutableLiveData<LoadingState>()
+    val loadingState: LiveData<LoadingState>
+        get() = _loadingState
 
-    private val _showError = MutableLiveData<Boolean>()
-    val showError: LiveData<Boolean>
-        get() = _showError
     private var yearFilter: Int? = null
 
     init {
@@ -37,7 +34,7 @@ class MoviesListViewModel(
     }
 
     fun load() {
-        showProgress()
+        _loadingState.postValue(LoadingState.IN_PROGRESS)
         viewModelScope.launch {
             try {
                 loadMoviesUseCase.invoke(Unit)
@@ -49,7 +46,7 @@ class MoviesListViewModel(
     }
 
     fun setFilter(checked: Boolean) {
-        showProgress()
+        _loadingState.postValue(LoadingState.IN_PROGRESS)
         yearFilter = if (checked) FILTER_2020_YEAR else null
         showSavedMovies()
     }
@@ -63,21 +60,13 @@ class MoviesListViewModel(
                 Timber.e(e, "Error get movies from DB")
             }
             if (movies.isEmpty()) {
-                showError()
+                _loadingState.postValue(LoadingState.ERROR)
             } else {
-                _showProgress.postValue(false)
+                _loadingState.postValue(LoadingState.LOADED)
                 _moviesList.value = movies
             }
         }
     }
-
-    private fun showError() {
-        _showProgress.postValue(false)
-        _showError.postValue(true)
-    }
-
-    private fun showProgress() {
-        _showProgress.postValue(true)
-        _showError.postValue(false)
-    }
 }
+
+enum class LoadingState { IN_PROGRESS, LOADED, ERROR }

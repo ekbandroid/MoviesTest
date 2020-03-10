@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <declare-styleable name="LoadingStateView">
+        <attr name="textError" format="string" />
+        <attr name="errorVisibility" format="boolean" />
+        <attr name="progressVisibility" format="boolean" />
+    </declare-styleable>
+
+</resources>

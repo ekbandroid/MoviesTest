@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.movies_list_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import androidx.core.view.isVisible
 
 class MoviesListFragment : Fragment() {
 
@@ -40,12 +39,10 @@ class MoviesListFragment : Fragment() {
         moviesFilterSwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setFilter(isChecked)
         }
-        retryButton.setOnClickListener {
-            viewModel.load()
-        }
+        loadingStateView.setOnRefreshListener { viewModel.load() }
         with(viewModel) {
             moviesList.observe(
-                this@MoviesListFragment,
+                viewLifecycleOwner,
                 Observer { moviesList ->
                     with(moviesAdapter) {
                         submitList(moviesList)
@@ -58,16 +55,14 @@ class MoviesListFragment : Fragment() {
                     }
                 }
             )
-            showProgress.observe(
-                this@MoviesListFragment,
-                Observer { isShow ->
-                    progressBarLayout.isVisible = isShow
-                }
-            )
-            showError.observe(
-                this@MoviesListFragment,
-                Observer { isShow ->
-                    errorLayout.isVisible = isShow
+            loadingState.observe(
+                viewLifecycleOwner,
+                Observer { state ->
+                    when (state) {
+                        LoadingState.IN_PROGRESS -> loadingStateView.showLoadingState()
+                        LoadingState.LOADED -> loadingStateView.showLoadedState()
+                        LoadingState.ERROR -> loadingStateView.showErrorState()
+                    }
                 }
             )
         }

@@ -33,39 +33,10 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/progressBarLayout"
+    <androidekb.com.moviestest.view.LoadingStateView
+        android:id="@+id/loadingStateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorTransparent"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/errorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error_load_movies_press_button_to_retry" />
-
-        <Button
-            android:id="@+id/retryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/retry_button" />
-    </LinearLayout>
+        app:textError="@string/error_load_movies_press_button_to_retry" />
 
 </FrameLayout>
