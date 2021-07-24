@@ -1,5 +1,6 @@
-include ':presentation'
+rootProject.name='MoviesTest'
+include ':app'
 include ':domain'
 include ':data'
 include ':common'
-rootProject.name='MoviesTest'
+include ':movies-list-feature'

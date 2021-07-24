@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="show_only_2020_year">Показать только за 2020 год.</string>
+    <string name="error_load_movies_press_button_to_retry">Ошибка загрузки, нажмите кнопку повторить</string>
+    <string name="retry_button">Повторить</string>
+</resources>
