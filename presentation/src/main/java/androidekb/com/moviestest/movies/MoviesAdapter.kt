@@ -3,7 +3,7 @@ package androidekb.com.moviestest.movies
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidekb.com.data.entities.Movie
+import androidekb.com.domain.entities.Movie
 import androidekb.com.moviestest.GlideApp
 import androidekb.com.moviestest.R
 import androidx.recyclerview.widget.DiffUtil

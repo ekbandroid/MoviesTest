@@ -1,12 +1,8 @@
 package androidekb.com.data.repositories.movies
 
-import androidekb.com.data.entities.Movie
 import androidekb.com.data.repositories.movies.api.MoviesService
-
-
-interface MoviesRemoteGateway {
-    suspend fun getMovies(): List<Movie>
-}
+import androidekb.com.domain.entities.Movie
+import androidekb.com.domain.repository_interfaces.MoviesRemoteGateway
 
 class MoviesRemoteGatewayImpl(private val moviesService: MoviesService) : MoviesRemoteGateway {
 

@@ -25,7 +25,6 @@ android {
 }
 
 dependencies {
-    implementation project(":data")
     implementation project(":common")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -1,7 +1,7 @@
 package androidekb.com.data.repositories.movies
 
 import androidekb.com.data.repositories.movies.db.model.MovieEntity
-import androidekb.com.data.entities.Movie
+import androidekb.com.domain.entities.Movie
 import androidekb.com.data.repositories.movies.api.model.MovieResponse
 
 object MovieConverter {
