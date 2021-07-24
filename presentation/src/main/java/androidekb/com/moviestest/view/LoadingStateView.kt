@@ -13,7 +13,7 @@ class LoadingStateView
 @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     FrameLayout(context, attrs, defStyleAttr) {
 
-    private var onRefreshListener: (() -> Unit)? = null
+    private var onRefreshClickListener: (() -> Unit)? = null
 
     init {
         inflate(context, R.layout.view_loading_state, this)
@@ -29,13 +29,13 @@ class LoadingStateView
 
         attributes.recycle()
 
-        retryButton.setOnClickListener { onRefreshListener?.invoke() }
+        retryButton.setOnClickListener { onRefreshClickListener?.invoke() }
 
         if (isInEditMode) showLoadingState()
     }
 
-    fun setOnRefreshListener(onRefreshListener: (() -> Unit)?) {
-        this.onRefreshListener = onRefreshListener
+    fun setOnRefreshClickListener(onRefreshListener: (() -> Unit)?) {
+        this.onRefreshClickListener = onRefreshListener
     }
 
     @Suppress("unused")

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidekb.com.domain.entities.Movie
 import androidekb.com.moviestest.R
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,6 +18,9 @@ class MoviesListFragment : Fragment() {
     }
 
     private val viewModel: MoviesListViewModel by viewModel()
+    private val moviesAdapter by lazy {
+        MoviesAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +31,12 @@ class MoviesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val moviesAdapter = MoviesAdapter()
+        initMoviesRecyclerView()
+        setListeners()
+        observeMoviesState()
+    }
+
+    private fun initMoviesRecyclerView() {
         with(moviesRecyclerView) {
             adapter = moviesAdapter
             addItemDecoration(
@@ -36,35 +45,43 @@ class MoviesListFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun setListeners() {
         moviesFilterSwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setFilter(isChecked)
         }
-        loadingStateView.setOnRefreshListener { viewModel.load() }
-        with(viewModel) {
-            moviesList.observe(
-                viewLifecycleOwner,
-                Observer { moviesList ->
-                    with(moviesAdapter) {
-                        submitList(moviesList)
-                        notifyDataSetChanged()
+
+        loadingStateView.setOnRefreshClickListener {
+            viewModel.load()
+        }
+    }
+
+    private fun observeMoviesState() {
+        viewModel.moviesState.observe(
+            viewLifecycleOwner,
+            Observer { state ->
+                when (state) {
+                    is MoviesState.InProgress -> loadingStateView.showLoadingState()
+                    is MoviesState.Loaded -> {
+                        loadingStateView.showLoadedState()
+                        showMoviesList(state.moviesList)
                     }
-                    with(moviesRecyclerView) {
-                        moviesRecyclerView.post {
-                            scrollToPosition(0)
-                        }
-                    }
+                    is MoviesState.Error -> loadingStateView.showErrorState()
                 }
-            )
-            loadingState.observe(
-                viewLifecycleOwner,
-                Observer { state ->
-                    when (state) {
-                        is LoadingState.InProgress -> loadingStateView.showLoadingState()
-                        is LoadingState.Loaded -> loadingStateView.showLoadedState()
-                        is LoadingState.Error -> loadingStateView.showErrorState()
-                    }
-                }
-            )
+            }
+        )
+    }
+
+    private fun showMoviesList(moviesList: List<Movie>) {
+        with(moviesAdapter) {
+            submitList(moviesList)
+            notifyDataSetChanged()
+        }
+        with(moviesRecyclerView) {
+            moviesRecyclerView.post {
+                scrollToPosition(0)
+            }
         }
     }
 }

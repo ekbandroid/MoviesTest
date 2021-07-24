@@ -1,8 +1,8 @@
 package androidekb.com.moviestest.movies
 
-import androidekb.com.data.entities.Movie
-import androidekb.com.domain.movies.GetSavedMoviesByYearUseCase
-import androidekb.com.domain.movies.LoadMoviesUseCase
+import androidekb.com.domain.entities.Movie
+import androidekb.com.domain.use_cases.GetSavedMoviesByYearUseCase
+import androidekb.com.domain.use_cases.LoadMoviesUseCase
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,13 +19,9 @@ class MoviesListViewModel(
         const val FILTER_2020_YEAR = 2020
     }
 
-    private val _moviesList = MutableLiveData<List<Movie>>()
-    val moviesList: LiveData<List<Movie>>
-        get() = _moviesList
-
-    private val _loadingState = MutableLiveData<LoadingState>()
-    val loadingState: LiveData<LoadingState>
-        get() = _loadingState
+    private val _moviesState = MutableLiveData<MoviesState>()
+    val moviesState: LiveData<MoviesState>
+        get() = _moviesState
 
     private var yearFilter: Int? = null
 
@@ -34,7 +30,7 @@ class MoviesListViewModel(
     }
 
     fun load() {
-        _loadingState.postValue(LoadingState.InProgress)
+        _moviesState.postValue(MoviesState.InProgress)
         viewModelScope.launch {
             try {
                 loadMoviesUseCase.invoke(Unit)
@@ -46,7 +42,7 @@ class MoviesListViewModel(
     }
 
     fun setFilter(checked: Boolean) {
-        _loadingState.postValue(LoadingState.InProgress)
+        _moviesState.postValue(MoviesState.InProgress)
         yearFilter = if (checked) FILTER_2020_YEAR else null
         showSavedMovies()
     }
@@ -60,17 +56,16 @@ class MoviesListViewModel(
                 Timber.e(e, "Error get movies from DB")
             }
             if (movies.isEmpty()) {
-                _loadingState.postValue(LoadingState.Error)
+                _moviesState.postValue(MoviesState.Error)
             } else {
-                _loadingState.postValue(LoadingState.Loaded)
-                _moviesList.value = movies
+                _moviesState.postValue(MoviesState.Loaded(movies))
             }
         }
     }
 }
 
-sealed class LoadingState {
-    object InProgress : LoadingState()
-    object Loaded : LoadingState()
-    object Error : LoadingState()
+sealed class MoviesState {
+    class Loaded(val moviesList: List<Movie>) : MoviesState()
+    object InProgress : MoviesState()
+    object Error : MoviesState()
 }
